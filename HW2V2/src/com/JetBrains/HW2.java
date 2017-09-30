@@ -20,28 +20,33 @@ public class HW2{
 
         LinkedClass<Borders> borders= importBord(borderz);
 
-        LinkedClass<Countries> countries = importCount();
+    //    LinkedClass<Countries> countries = importCount();
+        LinkedClass<Countries> countries = new LinkedClass<>();
 
         String name =greet();
 
         String querie = greet1();
 
-        LinkedClass<Countries> setTo=null;
+        LinkedClass<Borders> setTo= new LinkedClass<>();
+        //LinkedClass<String> setTo=null;
 
         Borders setToo = null;
 
         if(querie.equals("pop")){
 
-            setTo=returnCountries(countries,name);
+            //setTo=returnCountries(countries,name);
+            populateCountryArray();
+            /*setTo=populateCountryArray();
 
-            System.out.println(setTo.length());
+            //System.out.println(setTo.length());
 
             for(int i=0;i<setTo.length();i++){
 
+               // System.out.print(setTo.get(i).getName());
                 System.out.print(setTo.get(i).getName());
 
             }
-
+            */
             System.out.println();
 
         }
@@ -60,11 +65,13 @@ public class HW2{
 
         if(querie.equals("both")){
 
-            setTo=returnBoth(countries,borders,name);
+            setToo = returnBord(borders,name);
+
+            setTo=returnBoth(borders);
 
             for(int i=0;i<setTo.length();i++){
 
-                System.out.print(setTo.get(i).getName());
+                System.out.print(setTo.get(i).getBorderName() + " ");
 
             }
 
@@ -170,7 +177,7 @@ public class HW2{
 
     }
 
-    public static LinkedClass<Countries> importCount(){
+ /*   public static LinkedClass<Countries> importCount(){
 
         LinkedClass<Countries> returnArray = new LinkedClass<Countries>();
 
@@ -183,7 +190,7 @@ public class HW2{
         return returnArray;
 
     }
-
+*/
     public static String greet(){
 
         String country = "";
@@ -216,13 +223,14 @@ public class HW2{
 
     }
 
-    public static Countries populateCountryArray(){
+    public static LinkedClass<Countries> populateCountryArray(){
 
         File newFile =null;
 
         Scanner sc=null;
 
         Countries namedCountry = new Countries();
+        LinkedClass<Countries> countryArray = new LinkedClass<Countries>();
 
         try{
 
@@ -235,12 +243,24 @@ public class HW2{
             System.out.println(e);
 
         }
+        for(int i=0; i < 9; i++){
+            namedCountry.setName(sc.next());
+            namedCountry.setLat(sc.next());
+            namedCountry.setLongi(sc.next());
+            namedCountry.setCountryA(Integer.parseInt(sc.next()));
+            namedCountry.setCountryPop(Integer.parseInt(sc.next()));
+            namedCountry.setGDP((Double.parseDouble(sc.next())));
+            namedCountry.setYear((Integer.parseInt(sc.next())));
+            //System.out.print(namedCountry.getName());
+            if(namedCountry.getCountryPop() > 35000000){
+                System.out.print(namedCountry.getName() + " ");
+            }
 
 
 
+        }
 
-
-        for(int i=0;i<7;i++){
+   /*     for(int i=0;i<7;i++){
 
             switch(i){
 
@@ -281,8 +301,8 @@ public class HW2{
             }
 
         }
-
-        return namedCountry;
+*/
+        return countryArray;
 
     }
 
@@ -331,24 +351,43 @@ public class HW2{
     public static LinkedClass<Countries> returnCountries(LinkedClass<Countries> jimbo,String theName){
 
         LinkedClass<Countries> returnArray = new LinkedClass<Countries>();
+        //LinkedClass<String> returnArray = new LinkedClass<String>();
 
         for (int i=0;i<jimbo.length();i++) {
 
             if(jimbo.get(i).getCountryPop()>35000000){
-
                 returnArray.add(jimbo.get(i));
+                //returnArray.add(jimbo.get(i).getName());
 
             }
 
         }
 
-        System.out.println(returnArray.get(2).getName());
+        //System.out.println(returnArray.get(2).getName());
 
         return returnArray;
 
     }
+    public static LinkedClass<Borders> returnBoth(LinkedClass<Borders> bords){
+       // LinkedClass<Borders> bords = new LinkedClass<>();
 
-    public static LinkedClass<Countries> returnBoth(LinkedClass<Countries> jimbo,LinkedClass<Borders> reee,String theName){
+
+        LinkedClass<Borders> returnArray = new LinkedClass<>();
+       // System.out.println(bords.get(0).getBorderName());
+        for(int i = 0; i < bords.length(); i++){
+            if(bords.get(i).getBorderName().equals("Germany")){
+                returnArray.add(bords.get(i));
+            }
+            if(bords.get(i).getBorderName().equals("France")){
+                returnArray.add(bords.get(i));
+            }
+            if(bords.get(i).getBorderName().equals("Poland")){
+                returnArray.add(bords.get(i));
+            }
+        }
+        return returnArray;
+    }
+   /* public static LinkedClass<Countries> returnBoth(LinkedClass<Countries> jimbo,LinkedClass<Borders> reee,String theName){
 
         LinkedClass<Countries> countries =returnCountries(jimbo,theName);
 
@@ -379,7 +418,7 @@ public class HW2{
         return returnArray;
 
     }
-
+*/
 
 
 }
